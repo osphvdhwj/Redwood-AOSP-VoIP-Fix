@@ -1,0 +1,13 @@
+# HyperOS-inspired Audio Tuning for Low Latency
+vendor.audio.feature.kpi_optimize.enable=true
+vendor.audio.feature.compr_voip.enable=true
+persist.vendor.audio.fluence.voicecomm=true
+persist.vendor.audio.fluence.voicerec=true
+persist.vendor.audio.fluence.speaker=true
+vendor.audio.offload.buffer.size.kb=64
+vendor.audio_hal.period_size=192
+vendor.audio_hal.in_period_size=144
+vendor.voice.path.for.pcm.voip=true
+aaudio.hw_burst_min_usec=2000
+aaudio.mmap_policy=1
+aaudio.mmap_exclusive_policy=1

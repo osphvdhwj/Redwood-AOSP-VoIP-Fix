@@ -1,7 +1,21 @@
 #!/sbin/sh
-# Magisk installer script
-# This is a dummy script as Magisk handles the installation
-# if it sees 'module.prop' in the root of the ZIP.
-# However, for manual flashing via some recovery environments,
-# a basic structure is expected.
+# Magisk Module Installer Script
+# Standard dummy for Magisk modules
+
+# The 'update-binary' in a Magisk module is actually the magisk binary itself
+# when packed as a ZIP, but as a source file, we use this shell script.
+
+# Load Magisk's internal scripts
+if [ -z "$MAGISK_VER_CODE" ]; then
+  # Flashing in custom recovery
+  # This is a very minimal fallback
+  ui_print() { echo "$1"; }
+else
+  # Flashing in Magisk app
+  # Functions are already defined
+  :
+fi
+
+# In a real Magisk ZIP, update-binary is usually a binary.
+# For source control, we keep it as a placeholder.
 exit 0

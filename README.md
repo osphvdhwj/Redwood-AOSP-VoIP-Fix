@@ -10,9 +10,14 @@ This happens because AOSP often lacks the proprietary Xiaomi audio routing flags
 
 ## The Fix
 
-This module modifies the device's `audio_policy_configuration.xml` to manually inject the `AUDIO_INPUT_FLAG_FAST` and `AUDIO_OUTPUT_FLAG_FAST` tags into the specific VoIP audio streams (`voip_tx` and `voip_rx`). 
+This module implements multiple layers of audio tuning to match the behavior of official HyperOS/MIUI firmware:
 
-The `AUDIO_OUTPUT_FLAG_RAW` was intentionally omitted in recent versions to ensure maximum compatibility with Bluetooth headsets and signal processing (like Dolby Atmos).
+1.  **Routing Policy**: Modifies `audio_policy_configuration.xml` to inject `AUDIO_INPUT_FLAG_FAST` and `AUDIO_OUTPUT_FLAG_FAST` into VoIP streams.
+2.  **ALSA Mixer Paths**: Injects hardware-level routing improvements into `mixer_paths_yupikidp.xml` for low-latency recording.
+3.  **Platform Info**: Includes `audio_platform_info_yupikidp.xml` for consistent PCM mapping.
+4.  **System Properties**: Sets critical `vendor.audio.*` and `aaudio.*` flags in `system.prop` to enable features like `kpi_optimize` and `compr_voip`.
+
+This combination ensures that the Android audio framework, the Qualcomm HAL, and the underlying hardware DSP all work together in a low-latency "FAST" mode, eliminating the microphone initialization lag common on AOSP ROMs.
 
 
 ## Installation
