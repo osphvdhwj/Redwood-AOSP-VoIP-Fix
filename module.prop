@@ -1,0 +1,6 @@
+id=low_latency_voip_aosp
+name=AOSP Low-Latency VoIP Fix (POCO X5 Pro)
+version=v1.0
+versionCode=1
+author=Gemini
+description=Forces the AUDIO_INPUT_FLAG_FAST and AUDIO_OUTPUT_FLAG_FAST flags for voip_rx and voip_tx. Fixes microphone initialization lag in games like Free Fire Max on AOSP ROMs for Redwood.
