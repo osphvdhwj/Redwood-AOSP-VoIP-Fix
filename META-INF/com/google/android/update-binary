@@ -1,0 +1,7 @@
+#!/sbin/sh
+# Magisk installer script
+# This is a dummy script as Magisk handles the installation
+# if it sees 'module.prop' in the root of the ZIP.
+# However, for manual flashing via some recovery environments,
+# a basic structure is expected.
+exit 0

@@ -12,7 +12,8 @@ This happens because AOSP often lacks the proprietary Xiaomi audio routing flags
 
 This module modifies the device's `audio_policy_configuration.xml` to manually inject the `AUDIO_INPUT_FLAG_FAST` and `AUDIO_OUTPUT_FLAG_FAST` tags into the specific VoIP audio streams (`voip_tx` and `voip_rx`). 
 
-This modification strictly commands the Android audio framework to route voice communication directly to the hardware DSP, bypassing the slow software mixer and eliminating the latency penalty when opening your microphone.
+The `AUDIO_OUTPUT_FLAG_RAW` was intentionally omitted in recent versions to ensure maximum compatibility with Bluetooth headsets and signal processing (like Dolby Atmos).
+
 
 ## Installation
 
