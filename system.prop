@@ -9,10 +9,10 @@ vendor.voice.path.for.pcm.voip=true
 use.voice.path.for.pcm.voip=true
 
 # --- Buffer & Latency Tuning ---
-# Aligned for ultra-low latency (2.6ms @ 48kHz)
-vendor.audio_hal.period_size=128
-vendor.audio_hal.in_period_size=128
-vendor.audio_hal.period_multiplier=2
+# Aligned with verified hardware periodicity for POCO X5 Pro
+vendor.audio_hal.period_size=192
+vendor.audio_hal.in_period_size=144
+vendor.audio_hal.period_multiplier=3
 
 # --- AAudio / MMAP (Ultra-Low Latency) ---
 # Force MMAP for all apps to bypass software mixer
@@ -21,8 +21,6 @@ aaudio.mmap_exclusive_policy=2
 aaudio.hw_burst_min_usec=2000
 
 # --- High Quality Audio ---
-# High Quality Resampler
-af.resampler.quality=4
 # Enable Hi-Fi audio paths
 persist.vendor.audio.hifi_audio.enable=true
 # HyperOS-aligned offload buffers

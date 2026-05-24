@@ -1,6 +1,6 @@
 id=low_latency_voip_aosp
-name=AOSP Low-Latency VoIP Fix (POCO X5 Pro) - Pro v2.3
-version=v2.3-latency-hotfix
-versionCode=5
+name=AOSP Low-Latency VoIP Fix (POCO X5 Pro) - Pro v2.5
+version=v2.5-verified-stability
+versionCode=7
 author=Claude & Gemini
-description=Pro Edition Hotfix. Optimizes buffers (128 samples), fixes AEC compat, and adds comprehensive boot logging to /data/local/tmp/.
+description=Verified Stability Edition. Aligned with hardware-preferred buffer sizes (192/144) and forced MMAP. Resolves crashes while maintaining ultra-low latency.

@@ -1,26 +1,24 @@
-# POCO X5 Pro 5G (Redwood) — AOSP Low-Latency VoIP Fix v2.2 (Pro Edition)
+# POCO X5 Pro 5G (Redwood) — AOSP Low-Latency VoIP Fix v2.5 (Verified Stability)
 
 A Magisk/KernelSU module to eliminate microphone initialization lag and VoIP
 latency in games (Free Fire Max, BGMI, PUBG) on AOSP custom ROMs.
 
-## What's New in v2.2 (HyperOS Parity)
+## What's New in v2.5 (Verified Stability)
 
-| Component | v2.1-custom | v2.2-hyperos-parity |
+| Component | v2.4-hotfix | v2.5-verified |
 |---|---|---|
-| **HyperOS Alignment** | Basic | **Full Parity** (India/Global props) |
-| **Fluence SDK** | Standard | **None** (Matches HyperOS DSP behavior) |
-| **Voice Path** | Vendor only | **Dual Mode** (AOSP + Xiaomi routing) |
+| **Audioserver** | Fixed | **Optimized** (Verified Hardware Paths) |
+| **Buffer (Out)**| 192 (Stable) | **192** (Hardware Aligned) |
+| **Buffer (In)** | 192 | **144** (Hardware Aligned) |
 | **AAudio MMAP** | Forced | **Forced** (`policy=2`) |
-| **Process Priority** | Real-time | **Real-time** (`service.sh`) |
-| **Offload Buffers** | Stock | **HyperOS Optimized** (32KB) |
 
 ## Features
 
-- **Zero Latency**: 128-sample HAL buffers (HyperOS uses 192).
+- **Zero Latency**: Aligned with hardware-preferred periodicity (192 samples out / 144 samples in).
 - **Direct Hardware Path**: Forces `FAST` flags and `MMAP` hardware bypassing.
 - **Real-Time HAL**: `service.sh` elevates Audio HAL priority to `renice -20`.
 - **HyperOS Parity**: Includes official Xiaomi routing flags (`use.voice.path.for.pcm.voip`) and Hi-Fi audio enablement.
-- **Bluetooth Friendly**: Preserves Dolby Atmos and BT headset compatibility.
+- **Maximum Compatibility**: Preserves Dolby Atmos and BT headset compatibility by avoiding the `RAW` flag on VoIP streams.
 
 ## Installation
 
