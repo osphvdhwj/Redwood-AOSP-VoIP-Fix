@@ -1,39 +1,47 @@
 #!/system/bin/sh
 # AOSP Low-Latency VoIP Fix - service.sh
-# Applies real-time priority to audio processes after boot
+# Applies optimizations and captures debug logs
 
-LOG_FILE="/data/local/tmp/voip_fix_service.log"
-echo "$(date): VoIP Fix Service started" > $LOG_FILE
+LOG_FILE="/data/local/tmp/voip_fix_debug.log"
+BOOT_LOG="/data/local/tmp/voip_fix_boot.log"
 
-# Wait for boot to complete
+# Function to log with timestamp
+log() {
+  echo "$(date '+%H:%M:%S')] $1" >> $LOG_FILE
+}
+
+log "[service] Waiting for boot to complete..."
 while [ "$(getprop sys.boot_completed)" != "1" ]; do
-  sleep 5
+  sleep 2
 done
 
-# Wait for audio services to fully stabilize (Increased to 30s)
-sleep 30
+log "[service] Boot completed. Capturing environment state..."
 
-# List of critical audio processes to optimize
-# Added variants for different ROM HAL naming conventions
+# 1. Log all module-related properties
+log "[service] Applied System Properties:"
+getprop | grep -E "vendor.audio|aaudio|persist.vendor.audio|ro.vendor.audio.sdk" >> $LOG_FILE
+
+# 2. Capture a snapshot of audio-related logs from boot
+log "[service] Capturing audioserver logcat snippet..."
+logcat -d -s audioserver AudioHAL AudioPolicyManager | tail -n 100 > $BOOT_LOG
+
+# 3. Optimize audio processes
 AUDIO_PROCS="audioserver android.hardware.audio.service vendor.audio-hal audio-hal"
 
-# Run optimization in a loop to catch processes that might restart during boot
-for attempt in 1 2 3; do
-  echo "$(date): Optimization attempt $attempt" >> $LOG_FILE
-  for PROC in $AUDIO_PROCS; do
-    PIDS=$(pidof $PROC)
-    for PID in $PIDS; do
-      if [ ! -z "$PID" ]; then
-        # -20 is the highest priority for the scheduler
-        renice -n -20 -p $PID >> $LOG_FILE 2>&1
-        # ionice -c 1 is "Realtime" class for I/O
-        ionice -c 1 -n 0 -p $PID >> $LOG_FILE 2>&1
-        echo "$(date): Optimized $PROC (PID: $PID)" >> $LOG_FILE
-      fi
-    done
+log "[service] Starting process optimization..."
+for PROC in $AUDIO_PROCS; do
+  PIDS=$(pidof $PROC)
+  for PID in $PIDS; do
+    if [ ! -z "$PID" ]; then
+      renice -n -20 -p $PID >> $LOG_FILE 2>&1
+      ionice -c 1 -n 0 -p $PID >> $LOG_FILE 2>&1
+      # Set CPU affinity to big cores if possible (Redwood: cores 4-7 are big)
+      taskset -p f0 $PID >> $LOG_FILE 2>&1
+      log "[service] Optimized $PROC (PID: $PID)"
+    fi
   done
-  # Wait before next attempt
-  sleep 20
 done
 
-echo "$(date): VoIP Fix Service completed" >> $LOG_FILE
+# 4. Final Verification
+log "[service] Optimization cycle complete. Module v2.3 active."
+log "------------------------------------------------"

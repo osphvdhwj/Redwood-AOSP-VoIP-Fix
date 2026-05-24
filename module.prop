@@ -3,4 +3,4 @@ name=AOSP Low-Latency VoIP Fix (POCO X5 Pro) - Pro v2.3
 version=v2.3-latency-hotfix
 versionCode=5
 author=Claude & Gemini
-description=Pro Edition Hotfix. Optimizes buffer sizes (128 samples), restores voip_rx RAW flag, and ensures hardware AEC compatibility for in-game mic.
+description=Pro Edition Hotfix. Optimizes buffers (128 samples), fixes AEC compat, and adds comprehensive boot logging to /data/local/tmp/.
