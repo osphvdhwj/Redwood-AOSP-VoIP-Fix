@@ -1,13 +1,45 @@
-# HyperOS-inspired Audio Tuning for Low Latency
-vendor.audio.feature.kpi_optimize.enable=true
-vendor.audio.feature.compr_voip.enable=true
-persist.vendor.audio.fluence.voicecomm=true
-persist.vendor.audio.fluence.voicerec=true
-persist.vendor.audio.fluence.speaker=true
-vendor.audio.offload.buffer.size.kb=64
-vendor.audio_hal.period_size=192
-vendor.audio_hal.in_period_size=144
+# POCO X5 Pro 5G (Redwood) Low-Latency VoIP Fix - Pro Edition
+# Matches HyperOS/MIUI (India/Global) audio HAL configuration
+
+# --- VoIP Core & Routing ---
+# Disable compressed VoIP to force the faster PCM path
+vendor.audio.feature.compr_voip.enable=false
+# Force PCM VoIP hardware routing (AOSP + Xiaomi properties)
 vendor.voice.path.for.pcm.voip=true
+use.voice.path.for.pcm.voip=true
+
+# --- Buffer & Latency Tuning ---
+# Aligned for ultra-low latency (2.6ms @ 48kHz)
+vendor.audio_hal.period_size=128
+vendor.audio_hal.in_period_size=128
+vendor.audio_hal.period_multiplier=2
+
+# --- AAudio / MMAP (Ultra-Low Latency) ---
+# Force MMAP for all apps to bypass software mixer
+aaudio.mmap_policy=2
+aaudio.mmap_exclusive_policy=2
 aaudio.hw_burst_min_usec=2000
-aaudio.mmap_policy=1
-aaudio.mmap_exclusive_policy=1
+
+# --- High Quality Audio ---
+# High Quality Resampler
+af.resampler.quality=4
+# Enable Hi-Fi audio paths
+persist.vendor.audio.hifi_audio.enable=true
+# HyperOS-aligned offload buffers
+vendor.audio.offload.buffer.size.kb=32
+vendor.audio.offload.gapless.enabled=true
+
+# --- Fluence / Voice Processing ---
+# Use 'fluence' for hardware-accelerated AEC and NS
+ro.vendor.audio.sdk.fluencetype=fluence
+persist.vendor.audio.fluence.voicecomm=true
+persist.vendor.audio.fluence.voicecall=true
+persist.vendor.audio.fluence.speaker=true
+persist.vendor.audio.fluence.voicerec=true
+
+# --- Extra HAL Performance ---
+vendor.audio.feature.kpi_optimize.enable=true
+vendor.audio.feature.snd_monitor.enable=true
+vendor.audio.feature.hfp.enable=true
+vendor.audio.feature.multi_voice_session.enable=true
+vendor.audio.feature.concurrent_capture.enable=true
