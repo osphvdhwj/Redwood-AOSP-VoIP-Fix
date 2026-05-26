@@ -1,16 +1,16 @@
-# POCO X5 Pro 5G (Redwood) — AOSP Low-Latency VoIP Fix v2.5 (Verified Stability)
+# POCO X5 Pro 5G (Redwood) — AOSP Low-Latency VoIP Fix v2.6 (Latency & Ducking Fixed)
 
 A Magisk/KernelSU module to eliminate microphone initialization lag and VoIP
 latency in games (Free Fire Max, BGMI, PUBG) on AOSP custom ROMs.
 
-## What's New in v2.5 (Verified Stability)
+## What's New in v2.6
 
-| Component | v2.4-hotfix | v2.5-verified |
+| Component | v2.5-verified | v2.6 (Latest) |
 |---|---|---|
-| **Audioserver** | Fixed | **Optimized** (Verified Hardware Paths) |
-| **Buffer (Out)**| 192 (Stable) | **192** (Hardware Aligned) |
-| **Buffer (In)** | 192 | **144** (Hardware Aligned) |
-| **AAudio MMAP** | Forced | **Forced** (`policy=2`) |
+| **AAudio MMAP** | Forced (`policy=2`) | **Relaxed** (`policy=1`) (Prevents Free Fire OpenSL fallback) |
+| **AEC / Fluence** | Forced VoiceComm | **Disabled VoiceComm** (Fixes volume ducking/dropping) |
+| **Buffer (Out)**| 192 | **192** (Hardware Aligned) |
+| **Buffer (In)** | 144 | **144** (Hardware Aligned) |
 
 ## Features
 

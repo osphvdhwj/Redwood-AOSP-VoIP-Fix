@@ -1,1 +1,21 @@
-vendor.audio.feature.dynamic_ecns.enable=true
+# AOSP Low-Latency VoIP Fix - system.prop
+# Latency tuning + MMAP forcing + Fluence
+
+# 1. Enable Hardware Acoustic Echo Cancellation & Noise Suppression
+# DISABLED to prevent media volume ducking during Free Fire VoIP
+vendor.audio.feature.dynamic_ecns.enable=false
+persist.vendor.audio.fluence.speaker=true
+persist.vendor.audio.fluence.voicecall=true
+persist.vendor.audio.fluence.voicecomm=false
+persist.vendor.audio.fluence.voicerec=true
+ro.vendor.audio.sdk.fluencetype=fluence
+
+# 2. Relax AAudio MMAP to allow fallback (Policy 1 instead of 2) to prevent Free Fire OpenSL ES fallback
+aaudio.mmap_policy=1
+aaudio.mmap_exclusive_policy=1
+aaudio.hw_burst_min_usec=2000
+
+# 3. Hardware-Aligned Buffer Sizes (Zero Latency)
+vendor.audio_hal.in_period_size=144
+vendor.audio_hal.period_size=192
+vendor.audio_hal.period_multiplier=3

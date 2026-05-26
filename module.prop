@@ -1,6 +1,6 @@
 id=low_latency_voip_aosp
-name=AOSP Low-Latency VoIP Fix (POCO X5 Pro) - Pro v2.5
-version=v2.5-verified-stability
-versionCode=7
+name=AOSP Low-Latency VoIP Fix (POCO X5 Pro) - Pro v2.6
+version=v2.6-latency-ducking-fixed
+versionCode=8
 author=Claude & Gemini
-description=Verified Stability Edition. Aligned with hardware-preferred buffer sizes (192/144) and forced MMAP. Resolves crashes while maintaining ultra-low latency.
+description=Fixed 1-sec latency (relaxed MMAP policy) and volume ducking (disabled Fluence for voicecomm) in games like Free Fire.
