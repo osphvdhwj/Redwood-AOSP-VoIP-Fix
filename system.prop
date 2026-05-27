@@ -1,21 +1,25 @@
 # AOSP Low-Latency VoIP Fix - system.prop
 # Latency tuning + MMAP forcing + Fluence
 
-# 1. Enable Hardware Acoustic Echo Cancellation & Noise Suppression
-# DISABLED to prevent media volume ducking during Free Fire VoIP
+# 1. Disable Acoustic Echo Cancellation & Noise Suppression (KPI Optimization)
+# Forced off to eliminate processing delay during VoIP
 vendor.audio.feature.dynamic_ecns.enable=false
-persist.vendor.audio.fluence.speaker=true
+persist.vendor.audio.fluence.speaker=false
 persist.vendor.audio.fluence.voicecall=true
 persist.vendor.audio.fluence.voicecomm=false
 persist.vendor.audio.fluence.voicerec=true
-ro.vendor.audio.sdk.fluencetype=fluence
+ro.vendor.audio.sdk.fluencetype=none
+vendor.audio.feature.kpi_optimize.enable=true
 
-# 2. Relax AAudio MMAP to allow fallback (Policy 1 instead of 2) to prevent Free Fire OpenSL ES fallback
-aaudio.mmap_policy=1
-aaudio.mmap_exclusive_policy=1
-aaudio.hw_burst_min_usec=2000
+# 2. Force AAudio MMAP Exclusive (Zero Latency Path)
+# Set to 2 (Always) to bypass the Android mixer entirely
+aaudio.mmap_policy=2
+aaudio.mmap_exclusive_policy=2
+aaudio.hw_burst_min_usec=1000
+ro.audio.low_latency=true
+vendor.audio.hal.boot.low_latency.enable=true
 
-# 3. Hardware-Aligned Buffer Sizes (Zero Latency)
+# 3. Hardware-Aligned Buffer Sizes (Minimized Multiplier)
 vendor.audio_hal.in_period_size=144
-vendor.audio_hal.period_size=192
-vendor.audio_hal.period_multiplier=3
+vendor.audio_hal.period_size=144
+vendor.audio_hal.period_multiplier=1
