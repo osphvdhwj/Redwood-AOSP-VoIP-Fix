@@ -4,10 +4,13 @@
 # 1. Disable Acoustic Echo Cancellation & Noise Suppression (KPI Optimization)
 # Forced off to eliminate processing delay during VoIP
 vendor.audio.feature.dynamic_ecns.enable=false
+vendor.audio.feature.echo_reference.enable=false
 persist.vendor.audio.fluence.speaker=false
 persist.vendor.audio.fluence.voicecall=true
 persist.vendor.audio.fluence.voicecomm=false
 persist.vendor.audio.fluence.voicerec=true
+persist.vendor.audio.aec.enable=false
+vendor.audio.feature.ext_hw_aec.enable=false
 ro.vendor.audio.sdk.fluencetype=none
 vendor.audio.feature.kpi_optimize.enable=true
 
